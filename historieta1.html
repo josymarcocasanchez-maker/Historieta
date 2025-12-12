@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San mateo sin contaminación y limpio - Historias Verdes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="back-btn">← Volver</a>
+            <h1 class="logo">🌿 Historias Verdes</h1>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="story-container">
+            <h2>Un sam mateo mas limpio: El pueblo sano y libre de contaminación</h2>
+            
+            <div class="carousel">
+                <div class="carousel-content">
+                    <div class="carousel-image" id="carouselImage"></div>
+                    <div class="carousel-text" id="carouselText"></div>
+                </div>
+
+                <div class="carousel-controls">
+                    <button class="btn-prev" onclick="previousSlide()">← Anterior</button>
+                    <span class="slide-counter">
+                        <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
+                    </span>
+                    <button class="btn-next" onclick="nextSlide()">Siguiente →</button>
+                </div>
+
+                <div class="carousel-dots">
+                    <div id="dotsContainer"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Historias Verdes - San Mateo de Huanchor</p>
+    </footer>
+
+    <script>
+        const storyData = [
+            {
+                image: './img/historieta1/vinieta1.png',
+                text: 'Hola, me llamo Gotita. Vivo en las nubes y estoy feliz de contarte mi aventura.'
+            },
+            {
+                image: './img/historieta1/vinieta2.png',
+                text: 'Cada día, el calor del sol me hace evaporar del río y subir hacia el cielo.'
+            },
+            {
+                image: '/img/historieta1/vinieta3.png',
+                text: 'Cuando sube, me uno con otras gotas para formar hermosas nubes blancas.'
+            },
+            {
+                image: '/img/historieta1/vinieta4.png',
+                text: 'Cuando la nube se llena, caigo como lluvia para regar las plantas y los árboles.'
+            },
+            {
+                image: '/img/historieta1/vinieta5.png',
+                text: 'La lluvia es vital para que todo crezca: flores, frutas, verduras y plantas silvestres.'
+            },
+            {
+                image: '/img/historieta1/vinieta6.png',
+                text: 'Luego fluyo en ríos y arroyos, donde los animales vienen a beber agua fresca.'
+            },
+            {
+                image: '/img/historieta1/vinieta7.png',
+                text: 'También penetro el suelo para alimentar las raíces de los árboles y crear acuíferos.'
+            },
+            {
+                image: '/img/historieta1/vinieta8.png',
+                text: 'Finalmente, llego al océano donde descansaré antes de empezar de nuevo mi viaje.'
+            },
+            {
+                image: '/img/historieta1/vinieta9.png',
+                text: '¡Este ciclo es maravilloso! Debemos cuidar cada gota porque el agua es vida. ¡Ayuda a protegerla!'
+            }
+        ];
+
+        let currentSlide = 0;
+
+        function initializeCarousel() {
+            displaySlide(currentSlide);
+            createDots();
+        }
+
+        function displaySlide(index) {
+            const data = storyData[index];
+            document.getElementById('carouselImage').innerHTML = `<img src="${data.image}" alt="Imagen ${index + 1}">`;
+            document.getElementById('carouselText').textContent = data.text;
+            document.getElementById('currentSlide').textContent = index + 1;
+            updateDots();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % storyData.length;
+            displaySlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + storyData.length) % storyData.length;
+            displaySlide(currentSlide);
+        }
+
+        function createDots() {
+            const dotsContainer = document.getElementById('dotsContainer');
+            for (let i = 0; i < storyData.length; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+            document.getElementById('totalSlides').textContent = storyData.length;
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            displaySlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') previousSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        initializeCarousel();
+    </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Tesoro del Suelo - Historias Verdes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="back-btn">← Volver</a>
+            <h1 class="logo">🌿 Historias Verdes</h1>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="story-container">
+            <h2>El Tesoro del Suelo</h2>
+            
+            <div class="carousel">
+                <div class="carousel-content">
+                    <div class="carousel-image" id="carouselImage"></div>
+                    <div class="carousel-text" id="carouselText"></div>
+                </div>
+
+                <div class="carousel-controls">
+                    <button class="btn-prev" onclick="previousSlide()">← Anterior</button>
+                    <span class="slide-counter">
+                        <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
+                    </span>
+                    <button class="btn-next" onclick="nextSlide()">Siguiente →</button>
+                </div>
+
+                <div class="carousel-dots">
+                    <div id="dotsContainer"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Historias Verdes - San Mateo de Huanchor</p>
+    </footer>
+
+    <script>
+        const storyData = [
+            {
+                image: '/img/historieta3/Pagina1.png ',
+                text: 'Bajo tus pies hay un mundo mágico. ¡Bienvenido al Tesoro del Suelo!'
+            },
+            {
+                image: '/img/historieta3/Pagina2.png ',
+                text: 'En cada puñado de suelo viven millones de criaturas minúsculas: bacterias, hongos y gusanos.'
+            },
+            {
+                image: '/img/historieta3/Pagina3.png  ',
+                text: 'El suelo es rico en nutrientes. Cuando las hojas caen, se descomponen y enriquecen la tierra.'
+            },
+            {
+                image: '/img/historieta3/Pagina4.png ',
+                text: 'Las raíces de las plantas usan estos nutrientes para crecer fuertes y saludables.'
+            },
+            {
+                image: '/img/historieta3/Pagina5.png ',
+                text: 'Sin suelo fértil, no tendríamos comida. El suelo produce vegetales, frutas y granos que comemos.'
+            },
+            {
+                image: '//img/historieta3/Pagina6.png ',
+                text: 'El suelo también guarda carbono, ayudando a regular el clima de nuestro planeta.'
+            },
+            {
+                image: '/img/historieta3/Pagina7.png ',
+                text: 'Pero el suelo está en peligro. La contaminación y la erosión lo dañan cada año.'
+            },
+            {
+                image: '/img/historieta3/Pagina8.png ',
+                text: 'Podemos ayudar haciendo compost con residuos orgánicos. ¡Así devolvemos nutrientes al suelo!'
+            },
+            {
+                image: '/img/historieta3/Pagina9.png ',
+                text: '¡Cuida el suelo y el suelo te cuidará a ti! Juntos podemos construir un futuro más verde.'
+            },
+            {
+                image: '/img/historieta3/Pagina10.png ',
+                text: 'Gracias por descubrir el Tesoro del Suelo. ¡Comparte esta historia y protege nuestro planeta!'
+            },
+            {                
+                image: '/img/historieta3/Pagina11.png ',
+                text: 'Fin. 🌱'
+            }
+        ];
+
+        let currentSlide = 0;
+
+        function initializeCarousel() {
+            displaySlide(currentSlide);
+            createDots();
+        }
+
+        function displaySlide(index) {
+            const data = storyData[index];
+            document.getElementById('carouselImage').innerHTML = `<img src="${data.image}" alt="Imagen ${index + 1}">`;
+            document.getElementById('carouselText').textContent = data.text;
+            document.getElementById('currentSlide').textContent = index + 1;
+            updateDots();
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % storyData.length;
+            displaySlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + storyData.length) % storyData.length;
+            displaySlide(currentSlide);
+        }
+
+        function createDots() {
+            const dotsContainer = document.getElementById('dotsContainer');
+            for (let i = 0; i < storyData.length; i++) {
+                const dot = document.createElement('span');
+                dot.className = 'dot';
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+            document.getElementById('totalSlides').textContent = storyData.length;
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            displaySlide(currentSlide);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') previousSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+
+        initializeCarousel();
+    </script>
+</body>
+</html>
